@@ -7,7 +7,7 @@ module Etcd
     include ClientHelper
 
     def base_uri
-      "http://127.0.0.1:4001/v1"
+      "http://127.0.0.1:4001/v2"
     end
 
     let :client do

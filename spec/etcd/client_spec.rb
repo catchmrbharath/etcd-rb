@@ -7,7 +7,7 @@ module Etcd
     include ClientHelper
 
     def base_uri
-      "http://127.0.0.1:4001/v1"
+      "http://127.0.0.1:4001/v2"
     end
 
     let :client do
@@ -216,8 +216,8 @@ module Etcd
 
         with_stubbed_leaders(healthy_cluster_changed_leader_config)
 
-        stub_request(:post, "#{etcd1_uri}/v1/keys/foo").to_return(status: 307, headers: {'Location' => "#{etcd2_uri}/v1/keys/foo"})
-        stub_request(:post, "#{etcd2_uri}/v1/keys/foo").to_return(body: MultiJson.dump({'value' => 'bar'}))
+        stub_request(:post, "#{etcd1_uri}/v2/keys/foo").to_return(status: 307, headers: {'Location' => "#{etcd2_uri}/v2/keys/foo"})
+        stub_request(:post, "#{etcd2_uri}/v2/keys/foo").to_return(body: MultiJson.dump({'value' => 'bar'}))
         client.set("foo", "bar")
         client.leader.etcd.should == etcd2_uri
         client.leader.name.should == "node2"
