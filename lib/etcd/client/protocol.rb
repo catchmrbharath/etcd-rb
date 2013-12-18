@@ -27,16 +27,10 @@ module Etcd
     # @param key [String] the key or prefix to retrieve
     # @return [String, Hash] the value for the key, or a hash of keys and values
     #   when the key is a prefix.
-    def get(key)
-      data = request_data(:get, key_uri(key))
+    def get(key, options = {})
+      data = request_data(:get, key_uri(key), options)
       return nil unless data
-      if data.is_a?(Array)
-        data.each_with_object({}) do |e, acc|
-          acc[e[S_KEY]] = e[S_VALUE]
-        end
-      else
-        data[S_VALUE]
-      end
+      return data["node"]
     end
 
     # Atomically sets the value for a key if the current value for the key
