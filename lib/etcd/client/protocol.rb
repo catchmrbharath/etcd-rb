@@ -16,7 +16,7 @@ module Etcd
       body       = {:value => value}
       body[:ttl] = options[:ttl] if options[:ttl]
       data       = request_data(:put, key_uri(key), body: body)
-      data[S_PREV_VALUE]
+      return data
     end
 
     # Gets the value or values for a key.
@@ -28,7 +28,7 @@ module Etcd
     # @return [String, Hash] the value for the key, or a hash of keys and values
     #   when the key is a prefix.
     def get(key, options = {})
-      data = request_data(:get, key_uri(key), options)
+      data = request_data(:get, key_uri(key), :query => options)
       return nil unless data
       return data["node"]
     end
