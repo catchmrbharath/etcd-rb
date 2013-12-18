@@ -16,7 +16,7 @@ module Etcd
 
     def request_data(method, uri, args={})
       response = request(method, uri, args)
-      if response.status_code == 200
+      if response.status_code == 200 || response.status_code == 201
         MultiJson.load(response.body)
       end
     end
