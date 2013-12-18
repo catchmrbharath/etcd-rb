@@ -15,7 +15,7 @@ module Etcd
     def set(key, value, options={})
       body       = {:value => value}
       body[:ttl] = options[:ttl] if options[:ttl]
-      data       = request_data(:post, key_uri(key), body: body)
+      data       = request_data(:put, key_uri(key), body: body)
       data[S_PREV_VALUE]
     end
 
