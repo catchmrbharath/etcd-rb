@@ -9,9 +9,9 @@ module Etcd
 
     def initialize(opts={})
       check_required(opts)
-      @name   = opts[:name]
-      @etcd   = opts[:etcd]
-      @raft   = opts[:raft]
+      @name   = URI.unescape(opts[:name])
+      @etcd   = URI.unescape(opts[:etcd])
+      @raft   = URI.unescape(opts[:raft])
       @status = :unknown
     end
 
